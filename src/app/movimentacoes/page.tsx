@@ -39,6 +39,10 @@ export default function MovimentacoesPage() {
   const [selecionadas, setSelecionadas] = useState<number[]>([]);
   const [email, setEmail] = useState("");
 
+  // Removemos o uso do localStorage e mantemos apenas os dados iniciais
+  // Os dados agora serão mantidos apenas enquanto a página estiver aberta
+  // Se precisar salvar os dados entre sessões, podemos usar um banco de dados
+
   const labels = {
     pt: {
       title: "Movimentações de Estoque",

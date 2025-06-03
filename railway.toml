@@ -1,0 +1,13 @@
+[project]
+name = "estoque-app"
+
+[build]
+image = "nextjs"
+command = "npm run build"
+
+[deploy]
+command = "npm run start"
+
+[env]
+ZIMBRA_USER = "josivan.reis@gruposetup.com"
+ZIMBRA_PASS = "Setup@4102"

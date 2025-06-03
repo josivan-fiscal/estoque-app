@@ -1,29 +1,30 @@
-"use client";
-import { useState } from "react";
-import { useLanguage } from "../LanguageContext";
-import { MdCompareArrows, MdAdd, MdRemove, MdEmail, MdFileDownload } from "react-icons/md";
-import { Material, useMaterials } from "./materials";
+"use client"
+
+import { useState, useEffect } from "react"
+import { useLanguage } from "../LanguageContext"
+import { MdCompareArrows, MdAdd, MdRemove, MdEmail, MdFileDownload } from "react-icons/md"
+import { Material, useMaterials } from "./materials"
 
 type Mov = {
-  projeto: string;
-  tipoMov: string;
-  material: string;
-  texto: string;
-  quantidade: number;
-  origem: string;
-  destino: string;
-  usuario: string;
-  tipoMovSAP: string;
-  unidade: string;
-};
+  projeto: string
+  tipoMov: string
+  material: string
+  texto: string
+  quantidade: number
+  origem: string
+  destino: string
+  usuario: string
+  tipoMovSAP: string
+  unidade: string
+}
 
 export default function MovimentacoesPage() {
-  const { language } = useLanguage();
-  const { materials, newMaterial, l: materialLabels, handleMaterialChange, handleSaveMaterial, getMaterialByNome } = useMaterials();
+  const { language } = useLanguage()
+  const { materials, newMaterial, l: materialLabels, handleMaterialChange, handleSaveMaterial, getMaterialByNome } = useMaterials()
   const [movs, setMovs] = useState<Mov[]>([
     { projeto: "Obra Alpha", tipoMov: "entrada", material: "Cabo 10mm", texto: "Cabo flexível azul", quantidade: 100, origem: "NF 12345", destino: "Estoque Central", usuario: "João", tipoMovSAP: "", unidade: "m" },
     { projeto: "Obra Alpha", tipoMov: "saida", material: "Cabo 10mm", texto: "Cabo flexível azul", quantidade: 20, origem: "Estoque Central", destino: "Obra Alpha", usuario: "Maria", tipoMovSAP: "", unidade: "m" },
-  ]);
+  ])
   const [form, setForm] = useState<Omit<Mov, "quantidade"> & { quantidade: string }>({
     projeto: "",
     tipoMov: "entrada",
@@ -35,13 +36,15 @@ export default function MovimentacoesPage() {
     usuario: "",
     tipoMovSAP: "",
     unidade: ""
-  });
-  const [selecionadas, setSelecionadas] = useState<number[]>([]);
-  const [email, setEmail] = useState("");
+  })
+  const [selecionadas, setSelecionadas] = useState<number[]>([])
+  const [email, setEmail] = useState("")
 
-  // Removemos o uso do localStorage e mantemos apenas os dados iniciais
-  // Os dados agora serão mantidos apenas enquanto a página estiver aberta
-  // Se precisar salvar os dados entre sessões, podemos usar um banco de dados
+  // Verifica se estamos no cliente (navegador)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    // Se estivermos no cliente, podemos usar as funções do navegador
+  }, [])
 
   const labels = {
     pt: {

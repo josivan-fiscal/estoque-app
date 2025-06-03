@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../LanguageContext';
 
 export interface Material {
@@ -11,35 +11,30 @@ export interface Material {
 
 export function useMaterials() {
   const { language } = useLanguage();
-  const [materials, setMaterials] = useState<Material[]>(() => {
-    // Carregar materiais existentes do localStorage ou outro repositório
-    const savedMaterials = localStorage.getItem('materials');
-    const materials = savedMaterials ? JSON.parse(savedMaterials) : [
-      {
-        id: '1',
-        nome: 'Cabo 10mm',
-        descricao: 'Cabo flexível azul',
-        unidade: 'm',
-        saldo: 100
-      },
-      {
-        id: '2',
-        nome: 'Fio 2,5mm',
-        descricao: 'Fio elétrico vermelho',
-        unidade: 'm',
-        saldo: 50
-      },
-      {
-        id: '3',
-        nome: 'Conector',
-        descricao: 'Conector duplo',
-        unidade: 'un',
-        saldo: 200
-      }
-    ];
-    localStorage.setItem('materials', JSON.stringify(materials));
-    return materials;
-  });
+  const [materials, setMaterials] = useState<Material[]>([
+    {
+      id: '1',
+      nome: 'Cabo 10mm',
+      descricao: 'Cabo flexível azul',
+      unidade: 'm',
+      saldo: 100
+    },
+    {
+      id: '2',
+      nome: 'Fio 2,5mm',
+      descricao: 'Fio elétrico vermelho',
+      unidade: 'm',
+      saldo: 50
+    },
+    {
+      id: '3',
+      nome: 'Conector',
+      descricao: 'Conector duplo',
+      unidade: 'un',
+      saldo: 200
+    }
+  ]);
+
   const [newMaterial, setNewMaterial] = useState<Partial<Material>>({
     nome: '',
     descricao: '',
@@ -89,7 +84,6 @@ export function useMaterials() {
 
     setMaterials(prev => {
       const updatedMaterials = [...prev, material];
-      localStorage.setItem('materials', JSON.stringify(updatedMaterials));
       return updatedMaterials;
     });
     setNewMaterial({ nome: '', descricao: '', unidade: '', saldo: 0 });
@@ -98,6 +92,18 @@ export function useMaterials() {
   function getMaterialByNome(nome: string): Material | undefined {
     return materials.find((m: Material) => m.nome.toLowerCase() === nome.toLowerCase());
   }
+
+  // Função para salvar no localStorage apenas no cliente
+  const saveToLocalStorage = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('materials', JSON.stringify(materials));
+    }
+  };
+
+  // Atualizar o localStorage quando os materiais mudarem
+  useEffect(() => {
+    saveToLocalStorage();
+  }, [materials]);
 
   return {
     materials,

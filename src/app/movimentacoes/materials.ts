@@ -93,17 +93,14 @@ export function useMaterials() {
     return materials.find((m: Material) => m.nome.toLowerCase() === nome.toLowerCase());
   }
 
-  // Função para salvar no localStorage apenas no cliente
-  const saveToLocalStorage = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('materials', JSON.stringify(materials));
-    }
+  return {
+    materials,
+    newMaterial,
+    l: materialLabels,
+    handleMaterialChange,
+    handleSaveMaterial,
+    getMaterialByNome
   };
-
-  // Atualizar o localStorage quando os materiais mudarem
-  useEffect(() => {
-    saveToLocalStorage();
-  }, [materials]);
 
   return {
     materials,

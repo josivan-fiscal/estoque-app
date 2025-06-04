@@ -20,6 +20,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -31,14 +32,16 @@ export default function LoginPage() {
     );
 
     if (user) {
-      // Simulação de login bem-sucedido
-      // Em um app real, você geraria um token, guardaria no estado global/contexto, etc.
-      localStorage.setItem('loggedInUser', user.username); // Exemplo simples
-      alert(`Bem-vindo, ${user.username}! Login bem-sucedido.`);
-      router.push('/'); // Redireciona para a página inicial (ou dashboard)
+      localStorage.setItem('loggedInUser', user.username);
+      router.push('/');
     } else {
       setError('Usuário ou senha inválidos.');
     }
+  };
+
+  const handleForgotPassword = () => {
+    // Em um app real, aqui você implementaria a lógica de recuperação de senha
+    alert('Em breve será implementado o sistema de recuperação de senha.');
   };
 
   return (
@@ -51,7 +54,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-green-700"
             >
               Usuário
             </label>
@@ -63,14 +66,14 @@ export default function LoginPage() {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-green-700"
             >
               Senha
             </label>
@@ -82,13 +85,23 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
             />
           </div>
 
           {error && (
             <p className="text-sm text-red-600 text-center">{error}</p>
           )}
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-sm text-green-600 hover:text-green-800"
+            >
+              Esqueceu a senha?
+            </button>
+          </div>
 
           <div>
             <button

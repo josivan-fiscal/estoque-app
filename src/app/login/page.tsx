@@ -55,11 +55,11 @@ export default function LoginPage() {
           <p className="text-gray-600">Sistema de Gestão Integrado</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form onSubmit={handleLogin} className="space-y-4">
           <div className="relative">
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-green-700 mb-1"
+              className="block text-sm font-medium text-green-700 mb-1 text-center"
             >
               Usuário
             </label>
@@ -96,7 +96,7 @@ export default function LoginPage() {
           <div className="relative">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-green-700 mb-1"
+              className="block text-sm font-medium text-green-700 mb-1 text-center"
             >
               Senha
             </label>

@@ -19,12 +19,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Se estiver na tela de login, não mostra o sidebar
+  const isLoginPage = typeof window !== 'undefined' && window.location.pathname === '/login';
+
   return (
     <html lang="pt-BR">
       <body className={`${poppins.className} ${ptSans.className} bg-gray-100 min-h-screen`}>
         <LanguageProvider>
           <div className="flex min-h-screen">
-            <Sidebar />
+            {!isLoginPage && <Sidebar />}
             <main className="flex-1 p-4 md:p-8 max-w-full overflow-x-auto">
               {children}
             </main>

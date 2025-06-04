@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -9,6 +10,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-}
+  // Configuração do middleware
+  experimental: {
+    appDir: true,
+  },
+};
 
-module.exports = nextConfig
+export default nextConfig;

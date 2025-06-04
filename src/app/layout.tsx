@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, PT_Sans } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { MdDashboard, MdAttachMoney, MdInventory, MdPsychology, MdLanguage } from "react-icons/md";
 import { LanguageProvider } from "./LanguageContext";
 import Sidebar from "./Sidebar";
 
@@ -19,15 +17,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Se estiver na tela de login, não mostra o sidebar
-  const isLoginPage = typeof window !== 'undefined' && window.location.pathname === '/login';
+  // Verifica se o usuário está autenticado
+  const isLoggedIn = typeof window !== 'undefined' && localStorage.getItem('loggedInUser');
+
+  // Se não está logado, mostra apenas a tela de login
+  if (!isLoggedIn) {
+    return (
+      <html lang="pt-BR">
+        <body className={`${poppins.className} ${ptSans.className} min-h-screen`}>
+          <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-50 to-white">
+            <div className="bg-white p-8 md:p-12 rounded-lg shadow-xl w-full max-w-md">
+              {children}
+            </div>
+          </div>
+        </body>
+      </html>
+    );
+  }
 
   return (
     <html lang="pt-BR">
       <body className={`${poppins.className} ${ptSans.className} bg-gray-100 min-h-screen`}>
         <LanguageProvider>
           <div className="flex min-h-screen">
-            {!isLoginPage && <Sidebar />}
+            <Sidebar />
             <main className="flex-1 p-4 md:p-8 max-w-full overflow-x-auto">
               {children}
             </main>
